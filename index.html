@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babylonsk Kalender Sammenligner</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background:#f5f5f5;
+}
+
+h1,h2{
+    color:#333;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 5px rgba(0,0,0,.15);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:left;
+}
+
+th{
+    background:#d4b16a;
+}
+
+.result{
+    margin-top:15px;
+    padding:15px;
+    background:#eef6ff;
+    border-radius:8px;
+    font-size:1.1em;
+}
+</style>
+</head>
+<body>
+
+<h1>Babylonsk Kalender vs. Moderne Kalender</h1>
+
+<div class="card">
+<h2>Månederne</h2>
+
+<table>
+<tr>
+<th>Babylonisk måned</th>
+<th>Omtrent svarende til</th>
+</tr>
+
+<tr><td>Nisanu</td><td>Marts - April</td></tr>
+<tr><td>Ajaru</td><td>April - Maj</td></tr>
+<tr><td>Simanu</td><td>Maj - Juni</td></tr>
+<tr><td>Du'uzu (Tammuz)</td><td>Juni - Juli</td></tr>
+<tr><td>Abu</td><td>Juli - August</td></tr>
+<tr><td>Ululu</td><td>August - September</td></tr>
+<tr><td>Tashritu</td><td>September - Oktober</td></tr>
+<tr><td>Arahsamna</td><td>Oktober - November</td></tr>
+<tr><td>Kislimu</td><td>November - December</td></tr>
+<tr><td>Tebetu</td><td>December - Januar</td></tr>
+<tr><td>Shabatu</td><td>Januar - Februar</td></tr>
+<tr><td>Addaru</td><td>Februar - Marts</td></tr>
+
+</table>
+</div>
+
+<div class="card">
+<h2>Moderne dato → Babylonisk måned</h2>
+
+<input type="date" id="gregDate">
+
+<div class="result" id="gregResult">
+Vælg en dato...
+</div>
+</div>
+
+<div class="card">
+<h2>Babylonisk måned → Moderne periode</h2>
+
+<select id="babylonMonth">
+<option value="">Vælg måned</option>
+<option>Nisanu</option>
+<option>Ajaru</option>
+<option>Simanu</option>
+<option>Du'uzu (Tammuz)</option>
+<option>Abu</option>
+<option>Ululu</option>
+<option>Tashritu</option>
+<option>Arahsamna</option>
+<option>Kislimu</option>
+<option>Tebetu</option>
+<option>Shabatu</option>
+<option>Addaru</option>
+</select>
+
+<div class="result" id="babResult">
+Vælg en måned...
+</div>
+</div>
+
+<script>
+
+const babylonMap = [
+    {name:"Addaru", start:"02-15", end:"03-14"},
+    {name:"Nisanu", start:"03-15", end:"04-14"},
+    {name:"Ajaru", start:"04-15", end:"05-14"},
+    {name:"Simanu", start:"05-15", end:"06-14"},
+    {name:"Du'uzu (Tammuz)", start:"06-15", end:"07-14"},
+    {name:"Abu", start:"07-15", end:"08-14"},
+    {name:"Ululu", start:"08-15", end:"09-14"},
+    {name:"Tashritu", start:"09-15", end:"10-14"},
+    {name:"Arahsamna", start:"10-15", end:"11-14"},
+    {name:"Kislimu", start:"11-15", end:"12-14"},
+    {name:"Tebetu", start:"12-15", end:"01-14"},
+    {name:"Shabatu", start:"01-15", end:"02-14"}
+];
+
+document.getElementById("gregDate").addEventListener("change", function(){
+
+    const date = new Date(this.value);
+
+    const md =
+        String(date.getMonth()+1).padStart(2,'0')
+        + "-"
+        + String(date.getDate()).padStart(2,'0');
+
+    let found = "";
+
+    if(md >= "03-15" && md < "04-15") found = "Nisanu";
+    else if(md >= "04-15" && md < "05-15") found = "Ajaru";
+    else if(md >= "05-15" && md < "06-15") found = "Simanu";
+    else if(md >= "06-15" && md < "07-15") found = "Du'uzu (Tammuz)";
+    else if(md >= "07-15" && md < "08-15") found = "Abu";
+    else if(md >= "08-15" && md < "09-15") found = "Ululu";
+    else if(md >= "09-15" && md < "10-15") found = "Tashritu";
+    else if(md >= "10-15" && md < "11-15") found = "Arahsamna";
+    else if(md >= "11-15" && md < "12-15") found = "Kislimu";
+    else if(md >= "12-15" || md < "01-15") found = "Tebetu";
+    else if(md >= "01-15" && md < "02-15") found = "Shabatu";
+    else found = "Addaru";
+
+    document.getElementById("gregResult").innerHTML =
+        "<strong>" + this.value +
+        "</strong> svarer cirka til den babyloniske måned <strong>" +
+        found + "</strong>";
+});
+
+document.getElementById("babylonMonth").addEventListener("change", function(){
+
+    const periods = {
+        "Nisanu":"15. marts - 14. april",
+        "Ajaru":"15. april - 14. maj",
+        "Simanu":"15. maj - 14. juni",
+        "Du'uzu (Tammuz)":"15. juni - 14. juli",
+        "Abu":"15. juli - 14. august",
+        "Ululu":"15. august - 14. september",
+        "Tashritu":"15. september - 14. oktober",
+        "Arahsamna":"15. oktober - 14. november",
+        "Kislimu":"15. november - 14. december",
+        "Tebetu":"15. december - 14. januar",
+        "Shabatu":"15. januar - 14. februar",
+        "Addaru":"15. februar - 14. marts"
+    };
+
+    document.getElementById("babResult").innerHTML =
+        "<strong>" + this.value +
+        "</strong> svarer cirka til perioden <strong>" +
+        periods[this.value] + "</strong>";
+});
+
+</script>
+
+</body>
+</html>
