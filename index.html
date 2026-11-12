@@ -1,188 +1,271 @@
 <!DOCTYPE html>
 <html lang="da">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Babylonsk Kalender Sammenligner</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babylonsk Kalender Omregner</title>
 
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 20px;
-        background: #f5f5f5;
-      }
+<style>
+body{
+    font-family:Arial,sans-serif;
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+    background:#f5f5f5;
+}
 
-      h1,
-      h2 {
-        color: #333;
-      }
+h1,h2{
+    color:#333;
+}
 
-      .card {
-        background: white;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-      }
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+table{
+    width:100%;
+    border-collapse:collapse;
+}
 
-      th,
-      td {
-        border: 1px solid #ccc;
-        padding: 10px;
-        text-align: left;
-      }
+th,td{
+    padding:10px;
+    border:1px solid #ccc;
+}
 
-      th {
-        background: #d4b16a;
-      }
+th{
+    background:#c9a45f;
+}
 
-      .result {
-        margin-top: 15px;
-        padding: 15px;
-        background: #eef6ff;
-        border-radius: 8px;
-        font-size: 1.1em;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Babylonsk Kalender vs. Moderne Kalender</h1>
+input,select,button{
+    padding:10px;
+    margin:5px;
+    font-size:16px;
+}
 
-    <div class="card">
-      <h2>Månederne</h2>
+.result{
+    margin-top:15px;
+    padding:15px;
+    border-radius:8px;
+    background:#eef7ff;
+}
 
-      <table>
-        <tr>
-          <th>Babylonisk måned</th>
-          <th>Omtrent svarende til</th>
-        </tr>
+strong{
+    color:#003f7d;
+}
+</style>
+</head>
 
-        <tr><td>Nisanu</td><td>Marts - April</td></tr>
-        <tr><td>Ajaru</td><td>April - Maj</td></tr>
-        <tr><td>Simanu</td><td>Maj - Juni</td></tr>
-        <tr><td>Du'uzu (Tammuz)</td><td>Juni - Juli</td></tr>
-        <tr><td>Abu</td><td>Juli - August</td></tr>
-        <tr><td>Ululu</td><td>August - September</td></tr>
-        <tr><td>Tashritu</td><td>September - Oktober</td></tr>
-        <tr><td>Arahsamna</td><td>Oktober - November</td></tr>
-        <tr><td>Kislimu</td><td>November - December</td></tr>
-        <tr><td>Tebetu</td><td>December - Januar</td></tr>
-        <tr><td>Shabatu</td><td>Januar - Februar</td></tr>
-        <tr><td>Addaru</td><td>Februar - Marts</td></tr>
-      </table>
-    </div>
+<body>
 
-    <div class="card">
-      <h2>Moderne dato → Babylonisk måned</h2>
+<h1>🏺 Babylonsk Kalender Omregner</h1>
 
-      <input type="date" id="gregDate" />
+<div class="card">
 
-      <div class="result" id="gregResult"> Vælg en dato... </div>
-    </div>
+<h2>Babylonske måneder</h2>
 
-    <div class="card">
-      <h2>Babylonisk måned → Moderne periode</h2>
+<table>
+<tr>
+<th>Babylonisk måned</th>
+<th>Omtrent moderne periode</th>
+</tr>
 
-      <select id="babylonMonth">
-        <option value="">Vælg måned</option>
-        <option>Nisanu</option>
-        <option>Ajaru</option>
-        <option>Simanu</option>
-        <option>Du'uzu (Tammuz)</option>
-        <option>Abu</option>
-        <option>Ululu</option>
-        <option>Tashritu</option>
-        <option>Arahsamna</option>
-        <option>Kislimu</option>
-        <option>Tebetu</option>
-        <option>Shabatu</option>
-        <option>Addaru</option>
-      </select>
+<tr><td>Nisanu</td><td>15. marts - 13. april</td></tr>
+<tr><td>Ajaru</td><td>14. april - 13. maj</td></tr>
+<tr><td>Simanu</td><td>14. maj - 12. juni</td></tr>
+<tr><td>Du'uzu (Tammuz)</td><td>13. juni - 12. juli</td></tr>
+<tr><td>Abu</td><td>13. juli - 11. august</td></tr>
+<tr><td>Ululu</td><td>12. august - 10. september</td></tr>
+<tr><td>Tashritu</td><td>11. september - 10. oktober</td></tr>
+<tr><td>Arahsamna</td><td>11. oktober - 9. november</td></tr>
+<tr><td>Kislimu</td><td>10. november - 9. december</td></tr>
+<tr><td>Tebetu</td><td>10. december - 8. januar</td></tr>
+<tr><td>Shabatu</td><td>9. januar - 7. februar</td></tr>
+<tr><td>Addaru</td><td>8. februar - 14. marts</td></tr>
 
-      <div class="result" id="babResult"> Vælg en måned... </div>
-    </div>
+</table>
 
-    <script>
-      const babylonMap = [
-        { name: "Addaru", start: "02-15", end: "03-14" },
-        { name: "Nisanu", start: "03-15", end: "04-14" },
-        { name: "Ajaru", start: "04-15", end: "05-14" },
-        { name: "Simanu", start: "05-15", end: "06-14" },
-        { name: "Du'uzu (Tammuz)", start: "06-15", end: "07-14" },
-        { name: "Abu", start: "07-15", end: "08-14" },
-        { name: "Ululu", start: "08-15", end: "09-14" },
-        { name: "Tashritu", start: "09-15", end: "10-14" },
-        { name: "Arahsamna", start: "10-15", end: "11-14" },
-        { name: "Kislimu", start: "11-15", end: "12-14" },
-        { name: "Tebetu", start: "12-15", end: "01-14" },
-        { name: "Shabatu", start: "01-15", end: "02-14" },
-      ];
+</div>
 
-      document
-        .getElementById("gregDate")
-        .addEventListener("change", function () {
-          const date = new Date(this.value);
+<div class="card">
 
-          const md =
-            String(date.getMonth() + 1).padStart(2, "0") +
-            "-" +
-            String(date.getDate()).padStart(2, "0");
+<h2>📅 Moderne dato → Babylonisk dato</h2>
 
-          let found = "";
+<input type="date" id="gregDate">
 
-          if (md >= "03-15" && md < "04-15") found = "Nisanu";
-          else if (md >= "04-15" && md < "05-15") found = "Ajaru";
-          else if (md >= "05-15" && md < "06-15") found = "Simanu";
-          else if (md >= "06-15" && md < "07-15") found = "Du'uzu (Tammuz)";
-          else if (md >= "07-15" && md < "08-15") found = "Abu";
-          else if (md >= "08-15" && md < "09-15") found = "Ululu";
-          else if (md >= "09-15" && md < "10-15") found = "Tashritu";
-          else if (md >= "10-15" && md < "11-15") found = "Arahsamna";
-          else if (md >= "11-15" && md < "12-15") found = "Kislimu";
-          else if (md >= "12-15" || md < "01-15") found = "Tebetu";
-          else if (md >= "01-15" && md < "02-15") found = "Shabatu";
-          else found = "Addaru";
+<div id="gregResult" class="result">
+Vælg en dato...
+</div>
 
-          document.getElementById("gregResult").innerHTML =
-            "<strong>" +
-            this.value +
-            "</strong> svarer cirka til den babyloniske måned <strong>" +
-            found +
-            "</strong>";
-        });
+</div>
 
-      document
-        .getElementById("babylonMonth")
-        .addEventListener("change", function () {
-          const periods = {
-            Nisanu: "15. marts - 14. april",
-            Ajaru: "15. april - 14. maj",
-            Simanu: "15. maj - 14. juni",
-            "Du'uzu (Tammuz)": "15. juni - 14. juli",
-            Abu: "15. juli - 14. august",
-            Ululu: "15. august - 14. september",
-            Tashritu: "15. september - 14. oktober",
-            Arahsamna: "15. oktober - 14. november",
-            Kislimu: "15. november - 14. december",
-            Tebetu: "15. december - 14. januar",
-            Shabatu: "15. januar - 14. februar",
-            Addaru: "15. februar - 14. marts",
-          };
+<div class="card">
 
-          document.getElementById("babResult").innerHTML =
-            "<strong>" +
-            this.value +
-            "</strong> svarer cirka til perioden <strong>" +
-            periods[this.value] +
-            "</strong>";
-        });
-    </script>
-  </body>
+<h2>🏺 Babylonisk dato → Moderne dato</h2>
+
+<select id="monthSelect">
+<option value="0">Nisanu</option>
+<option value="1">Ajaru</option>
+<option value="2">Simanu</option>
+<option value="3">Du'uzu (Tammuz)</option>
+<option value="4">Abu</option>
+<option value="5">Ululu</option>
+<option value="6">Tashritu</option>
+<option value="7">Arahsamna</option>
+<option value="8">Kislimu</option>
+<option value="9">Tebetu</option>
+<option value="10">Shabatu</option>
+<option value="11">Addaru</option>
+</select>
+
+<input type="number" id="babDay"
+       min="1"
+       max="30"
+       value="1">
+
+<button onclick="convertBabylon()">Beregn</button>
+
+<div id="babResult" class="result">
+Indtast dag og måned...
+</div>
+
+</div>
+
+<script>
+
+const months = [
+
+{ name:"Nisanu", start:[3,15] },
+{ name:"Ajaru", start:[4,14] },
+{ name:"Simanu", start:[5,14] },
+{ name:"Du'uzu (Tammuz)", start:[6,13] },
+{ name:"Abu", start:[7,13] },
+{ name:"Ululu", start:[8,12] },
+{ name:"Tashritu", start:[9,11] },
+{ name:"Arahsamna", start:[10,11] },
+{ name:"Kislimu", start:[11,10] },
+{ name:"Tebetu", start:[12,10] },
+{ name:"Shabatu", start:[1,9] },
+{ name:"Addaru", start:[2,8] }
+
+];
+
+function monthIndex(month,day){
+
+if(month===3 && day>=15) return 0;
+if(month===4 && day>=14) return 1;
+if(month===5 && day>=14) return 2;
+if(month===6 && day>=13) return 3;
+if(month===7 && day>=13) return 4;
+if(month===8 && day>=12) return 5;
+if(month===9 && day>=11) return 6;
+if(month===10 && day>=11) return 7;
+if(month===11 && day>=10) return 8;
+if(month===12 && day>=10) return 9;
+
+if(month===1 && day>=9) return 10;
+if(month===2 && day>=8) return 11;
+
+if(month===3 && day<15) return 11;
+if(month===4 && day<14) return 0;
+if(month===5 && day<14) return 1;
+if(month===6 && day<13) return 2;
+if(month===7 && day<13) return 3;
+if(month===8 && day<12) return 4;
+if(month===9 && day<11) return 5;
+if(month===10 && day<11) return 6;
+if(month===11 && day<10) return 7;
+if(month===12 && day<10) return 8;
+if(month===1 && day<9) return 9;
+if(month===2 && day<8) return 10;
+
+return 0;
+}
+
+document.getElementById("gregDate")
+.addEventListener("change",function(){
+
+const d=new Date(this.value);
+
+if(!this.value) return;
+
+const month=d.getMonth()+1;
+const day=d.getDate();
+
+const idx=monthIndex(month,day);
+
+const startMonth=months[idx].start[0];
+const startDay=months[idx].start[1];
+
+let startYear=d.getFullYear();
+
+if(startMonth>month){
+startYear--;
+}
+
+const startDate=new Date(
+startYear,
+startMonth-1,
+startDay
+);
+
+const dayNumber=
+Math.floor((d-startDate)/(1000*60*60*24))+1;
+
+document.getElementById("gregResult").innerHTML=
+`
+<strong>${this.value}</strong><br><br>
+Babylonisk måned:
+<strong>${months[idx].name}</strong><br>
+Dag:
+<strong>${dayNumber}</strong>
+`;
+
+});
+
+function convertBabylon(){
+
+const index=
+parseInt(document.getElementById("monthSelect").value);
+
+const day=
+parseInt(document.getElementById("babDay").value);
+
+const year=
+new Date().getFullYear();
+
+const m=months[index];
+
+const startDate=
+new Date(year,m.start[0]-1,m.start[1]);
+
+startDate.setDate(
+startDate.getDate()+day-1
+);
+
+const formatted=
+startDate.toLocaleDateString(
+"da-DK"
+);
+
+document.getElementById("babResult").innerHTML=
+`
+Babylonisk dato:<br>
+<strong>Dag ${day}
+i ${m.name}</strong>
+
+<br><br>
+
+≈ Moderne dato:<br>
+<strong>${formatted}</strong>
+`;
+
+}
+
+</script>
+
+</body>
 </html>
