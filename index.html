@@ -1,1 +1,41 @@
-<!DOCTYPE html><html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kalender PRO</title><style>body{font-family:Arial,sans-serif;margin:0;background:#111;color:#eee}header{background:#222;padding:12px}main{padding:16px}.card{background:#1c1c1c;padding:15px;border-radius:10px;margin:10px 0}input,button{padding:8px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #444;padding:6px}th{background:#333}</style></head><body><header><h1>🏺 Kalender PRO</h1></header><main><div class=card><h2>Datoopslag</h2><input type=date id=d><button onclick=calc()>Beregn</button><div id=o></div></div><div class=card><h2>Kalendere</h2><table><tr><th>Kalender</th><th>Værdi</th></tr><tr><td>Babylonisk</td><td>Nisanu → Addaru</td></tr><tr><td>Hebraisk</td><td>Nisan → Adar</td></tr><tr><td>Romersk</td><td>Ianuarius → December</td></tr></table></div></main><script>const bab=['Addaru','Nisanu','Ajaru','Simanu','Tammuz','Abu','Ululu','Tashritu','Arahsamna','Kislimu','Tebetu','Shabatu'];function moon(dt){const lp=29.53058867;const base=new Date('2000-01-06');const days=(dt-base)/86400000;const age=((days%lp)+lp)%lp;if(age<1)return'🌑 Nymåne';if(age<7)return'🌒';if(age<9)return'🌓';if(age<15)return'🌔';if(age<16)return'🌕 Fuldmåne';if(age<22)return'🌖';if(age<24)return'🌗';return'🌘';}function calc(){let v=document.getElementById('d').value;if(!v)return;let dt=new Date(v);let m=dt.getMonth()+1;document.getElementById('o').innerHTML='<p><b>Moderne:</b> '+v+'</p><p><b>Babylonisk:</b> '+bab[m%12]+'</p><p><b>Hebraisk:</b> Demonstrationsvisning</p><p><b>Romersk måned:</b> '+m+'</p><p><b>Månefase:</b> '+moon(dt)+'</p>';}</script></body></html>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalender PRO v2</title>
+<style>
+body{font-family:system-ui,Arial,sans-serif;background:#111;color:#eee;margin:0}
+header{padding:16px;background:#1b1b1b}main{padding:16px;max-width:1100px;margin:auto}
+.card{background:#1c1c1c;padding:16px;border-radius:12px;margin:12px 0}
+input,button{padding:10px;border-radius:8px;border:1px solid #555}
+button{cursor:pointer}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid #444;padding:6px}th{background:#333}
+</style>
+</head><body>
+<header><h1>🏺 Kalender PRO v2</h1></header>
+<main>
+<div class='card'>
+<h2>Datoopslag</h2>
+<input type='date' id='d'><button onclick='calc()'>Beregn</button>
+<div id='out'></div>
+</div>
+<div class='card'><h2>Kalendersammenligning</h2><div class='grid'>
+<div><table id='resultTable'></table></div>
+<div><p>Denne version bruger den indbyggede hebraiske kalender i browseren (Intl), romersk datoformat, månefase og en tilnærmet babylonisk måned.</p></div>
+</div></div>
+<div class='card'><h2>Årsoversigt (første 31 dage)</h2><table id='yearTable'></table></div>
+</main>
+<script>
+const babMonths=['Nisanu','Ajaru','Simanu','Tammuz','Abu','Ululu','Tashritu','Arahsamna','Kislimu','Tebetu','Shabatu','Addaru'];
+function babylonianMonth(d){const m=d.getMonth()+1;return babMonths[(m+8)%12];}
+function moonPhase(date){const lp=29.53058867;const base=new Date('2000-01-06T18:14:00Z');const age=((((date-base)/86400000)%lp)+lp)%lp; if(age<1)return '🌑 Nymåne'; if(age<7.4)return '🌒 Tiltagende'; if(age<8.9)return '🌓 Første kvarter'; if(age<14.8)return '🌔 Tiltagende måne'; if(age<16.2)return '🌕 Fuldmåne'; if(age<22.1)return '🌖 Aftagende'; if(age<23.6)return '🌗 Sidste kvarter'; return '🌘 Aftagende segl';}
+function romanDate(d){const day=d.getDate(); const months=['Ianuarias','Februarias','Martias','Apriles','Maias','Iunias','Quintiles','Sextiles','Septembres','Octobres','Novembres','Decembres']; const m=months[d.getMonth()]; if(day===1) return 'Kalendae '+m; if(day===5) return 'Nonae '+m; if(day===13) return 'Idus '+m; return day+' '+m;}
+function hebrewDate(d){try{return new Intl.DateTimeFormat('en-u-ca-hebrew',{day:'numeric',month:'long',year:'numeric'}).format(d);}catch(e){return 'Ikke understøttet';}}
+function calc(){const v=document.getElementById('d').value; if(!v)return; const d=new Date(v+'T12:00:00');
+const rows=[['Moderne',d.toLocaleDateString('da-DK')],['Hebraisk',hebrewDate(d)],['Babylonisk',babylonianMonth(d)],['Romersk',romanDate(d)],['Månefase',moonPhase(d)]];
+let t='<table><tr><th>Kalender</th><th>Dato</th></tr>'; rows.forEach(r=>t+=`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`); t+='</table>'; document.getElementById('resultTable').innerHTML=t; document.getElementById('out').innerHTML='';}
+function buildYear(){const y=new Date().getFullYear(); let h='<tr><th>Moderne</th><th>Hebraisk</th><th>Babylonisk</th><th>Romersk</th><th>Måne</th></tr>'; for(let i=1;i<=31;i++){let d=new Date(y,0,i,12); h+=`<tr><td>${d.toLocaleDateString('da-DK')}</td><td>${hebrewDate(d)}</td><td>${babylonianMonth(d)}</td><td>${romanDate(d)}</td><td>${moonPhase(d)}</td></tr>`;} document.getElementById('yearTable').innerHTML=h; }
+buildYear();
+</script></body></html>
